@@ -50,9 +50,15 @@ public class LinkedList {
 
 
     }
-
-
-
+public Node popLast() {
+    if (head == null || head.next != null) {
+        Node secondLast = head;
+        while (secondLast.next.next != null) {
+            secondLast = secondLast.next;
+        }
+        secondLast.next = null;
+    }return head;
+}
     public void display() {                 // Print the linked list
         Node current = head;
 
@@ -76,8 +82,11 @@ public class LinkedList {
         System.out.println("\nAdded new element:");
         li.insertBetweenNode(30);
         li.display();
-        System.out.println("\n\nAfter deleting first element:");
-        li.deleteElement();
+     //   System.out.println("\n\nAfter deleting first element:");
+      //  li.deleteElement();
+       // li.display();
+        System.out.println(" \nAfter Deleting Last element:");
+        li.popLast();
         li.display();
 
     }
