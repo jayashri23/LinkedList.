@@ -50,15 +50,17 @@ public class LinkedList {
 
 
     }
-public Node popLast() {
-    if (head == null || head.next != null) {
-        Node secondLast = head;
-        while (secondLast.next.next != null) {
-            secondLast = secondLast.next;
+    public Node popLast(){
+        if (head==null || head.next != null) {
+            Node secondLast = head;
+            while (secondLast.next.next != null) { ///find last element
+                secondLast = secondLast.next;
+            }
+            secondLast.next = null;// change next of second last
+
         }
-        secondLast.next = null;
-    }return head;
-}
+        return head;
+    }
 
     public boolean searchNode( int p) {
         Node current = head;// initialize current
@@ -73,7 +75,75 @@ public Node popLast() {
 
         System.out.println("Not found");
         return false;
+
     }
+
+    public void inserAfterPositionWithKeyValue(int pos,int elementNew) {
+        Node newNode = new Node(elementNew);
+        newNode.data = elementNew;
+        newNode.next = null;
+        if(pos < 1) { // check positions
+            System.out.print("\nInvalid.");
+        } else if (pos == 1) { // Insert first node
+            newNode.next = head;
+            head = newNode;
+        } else {
+            Node temp = head;
+            for(int i = 1; i < pos-1; i++) {
+                if(temp != null) {
+                    temp = temp.next;
+                }
+            }
+            if(temp != null) {
+                newNode.next = temp.next;
+                temp.next = newNode;
+            } else {
+                System.out.print("\n previous node is null.");
+            }
+        }
+    }
+
+    public void deleteNode(int position){
+        if (head==null)
+            return;
+        Node temp=head;
+        if (position==0){
+            head=temp.next;
+            return;
+        }
+        for (int i=0; temp !=null && i<position-1;i++)// finding key to delete
+        {
+            temp=temp.next;
+        }
+        if (temp==null || temp.next ==null){ //if key not present
+            return;
+        }
+        Node next =temp.next.next;// remove the node
+        temp.next=next;
+    }
+    public void sortLinkedList(Node head) {
+        Node current = head;
+        Node index = null;
+        int temp;
+
+        if (head == null) {  //if head null return empty
+            return;
+        } else {
+            while (current != null) { // index points to the node next to current
+                index = current.next;
+                while (index != null) {
+                    if (current.data > index.data) { //check data of current node is greater than next node / if grater swap
+                        temp = current.data;
+                        current.data = index.data;
+                        index.data = temp;
+                    }
+                    index = index.next;
+                }
+                current = current.next;
+            }
+        }
+    }
+
     public void display() {                 // Print the linked list
         Node current = head;
 
@@ -88,6 +158,7 @@ public Node popLast() {
         }
 
     }
+
     public static void main(String[] args) {
         LinkedList li = new LinkedList();
         System.out.println("Linked list: ");
@@ -97,12 +168,25 @@ public Node popLast() {
         System.out.println("\nAdded new element:");
         li.insertBetweenNode(30);
         li.display();
-     //   System.out.println("\n\nAfter deleting first element:");
-      //  li.deleteElement();
-       // li.display();
-       // System.out.println(" \nAfter Deleting Last element:");
-     //   li.popLast();
-        System.out.println(" \nSearching node value 30 :");
+        // System.out.println("\n\nAfter deleting first element:");
+        //li.deleteElement();
+        // li.display();
+        //li.popLast();
+        /// System.out.println("\n\nAfter deleting last element:");
+        // li.display();
+        System.out.println("\n\nList after search");
         li.searchNode(30);
+        li.display();
+        li.inserAfterPositionWithKeyValue(3,40);
+        System.out.println("\n\nAdding Element after node: ");
+        li.display();
+        //li.deleteNode(2);
+        //System.out.println("\n\nDelete Element after node: ");
+        //li.display();
+
+        li.sortLinkedList(li.head);
+        System.out.println("\n\nSorted Element : ");
+        li.display();
+
     }
 }
