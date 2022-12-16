@@ -1,6 +1,7 @@
 package com.linkedlist;
 
 public class LinkedList {
+
     class Node {   // Create a node
         int data;
         Node next;
@@ -103,6 +104,25 @@ public class LinkedList {
         }
     }
 
+    public void deleteNode(int position){
+        if (head==null)
+            return;
+        Node temp=head;
+        if (position==0){
+            head=temp.next;
+            return;
+        }
+        for (int i=0; temp !=null && i<position-1;i++)// finding key to delete
+        {
+            temp=temp.next;
+        }
+        if (temp==null || temp.next ==null){ //if key not present
+            return;
+        }
+        Node next =temp.next.next;// remove the node
+        temp.next=next;
+    }
+
     public void display() {                 // Print the linked list
         Node current = head;
 
@@ -138,5 +158,7 @@ public class LinkedList {
         li.inserAfterPositionWithKeyValue(3,40);
         System.out.println("\n\nAdding Element after node: ");
         li.display();
+
+
     }
 }
